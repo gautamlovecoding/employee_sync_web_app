@@ -1,35 +1,48 @@
+import { HiOutlineViewGrid, HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import {
-  HiOutlineViewGrid,
-  HiOutlineCube,
-  HiOutlineShoppingCart,
-  HiOutlineUsers,
-  HiOutlineQuestionMarkCircle,
-} from "react-icons/hi";
+  FaCogs,
+  FaMoneyBillWave,
+  FaCalendarAlt,
+  FaBuilding,
+  FaUsers,
+} from "react-icons/fa";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
     key: "dashboard",
     label: "Dashboard",
-    path: "/",
+    path: "/admin-dashboard",
     icon: <HiOutlineViewGrid />,
   },
   {
-    key: "compnies",
+    key: "companies",
     label: "Company",
-    path: "/company",
-    icon: <HiOutlineCube />,
+    path: "/admin-dashboard/companies",
+    icon: <FaBuilding />,
   },
   {
     key: "employees",
     label: "Employee",
-    path: "/employee",
-    icon: <HiOutlineUsers />,
+    path: "/admin-dashboard/employees",
+    icon: <FaUsers />,
   },
   {
-    key: "projects",
-    label: "Projects",
-    path: "/projects",
-    icon: <HiOutlineShoppingCart />,
+    key: "leave",
+    label: "Leave",
+    path: "/leave",
+    icon: <FaCalendarAlt />,
+  },
+  {
+    key: "salary",
+    label: "Salary",
+    path: "/salary",
+    icon: <FaMoneyBillWave />,
+  },
+  {
+    key: "settings",
+    label: "Setting",
+    path: "/settings",
+    icon: <FaCogs />,
   },
 ];
 

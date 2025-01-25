@@ -22,9 +22,11 @@ export default function Login() {
         }
       );
       if (response.data.success) {
+        console.log("🚀⚡👨‍💻🚀 ~ handleSubmit ~ response.data🚀🔥🚀➢", response.data)
         login(response.data.userData);
         localStorage.setItem("token", response.data.token);
         if (response.data.userData.role === "admin") {
+          console.log("🚀⚡👨‍💻🚀 ~ handleSubmit ~ response.data.userData.role🚀🔥🚀➢", response.data.userData.role)
           navigate("/admin-dashboard");
         } else {
           navigate("/employee-dashboard");

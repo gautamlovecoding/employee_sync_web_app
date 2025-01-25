@@ -12,6 +12,7 @@ const authContext = ({ children }) => {
         const token = localStorage.getItem("token");
         if (!token) {
           setUser(null);
+          setLoading(false);
         }
         const response = await axios.get(
           "http://localhost:5000/api/auth/verify",
