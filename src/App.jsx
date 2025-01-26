@@ -17,6 +17,9 @@ import EditCompany from "./components/company/EditCompany";
 import List from "./components/employee/List";
 import Add from "./components/employee/Add";
 import View from "./components/employee/View";
+import Edit from "./components/employee/Edit";
+import AddSalary from "./components/salary/Add";
+import ViewSalary from "./components/salary/View";
 
 function App() {
   return (
@@ -36,11 +39,28 @@ function App() {
         >
           <Route index element={<AdminSummary />} />
           <Route path="/admin-dashboard/companies" element={<CompanyList />} />
-          <Route path="/admin-dashboard/add-companies" element={<AddCompany />} />
-          <Route path="/admin-dashboard/companies/:id" element={<EditCompany />} />
+          <Route
+            path="/admin-dashboard/add-companies"
+            element={<AddCompany />}
+          />
+          <Route
+            path="/admin-dashboard/companies/:id"
+            element={<EditCompany />}
+          />
+
           <Route path="/admin-dashboard/employees" element={<List />} />
           <Route path="/admin-dashboard/add-employees" element={<Add />} />
           <Route path="/admin-dashboard/employees/:id" element={<View />} />
+          <Route
+            path="/admin-dashboard/employees/edit/:id"
+            element={<Edit />}
+          />
+          <Route
+            path="/admin-dashboard/employees/salary/:id"
+            element={<ViewSalary />}
+          />
+
+          <Route path="/admin-dashboard/salary/add" element={<AddSalary />} />
         </Route>
         <Route
           path="/employee-dashboard"

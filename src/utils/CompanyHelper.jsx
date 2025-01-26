@@ -14,6 +14,7 @@ export const columns = [
   {
     name: "Action",
     selector: (row) => row.action,
+    center: true
   },
 ];
 

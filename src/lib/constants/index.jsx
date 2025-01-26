@@ -27,16 +27,16 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <FaUsers />,
   },
   {
+    key: "salary",
+    label: "Salary",
+    path: "/admin-dashboard/salary/add",
+    icon: <FaMoneyBillWave />,
+  },
+  {
     key: "leave",
     label: "Leave",
     path: "/leave",
     icon: <FaCalendarAlt />,
-  },
-  {
-    key: "salary",
-    label: "Salary",
-    path: "/salary",
-    icon: <FaMoneyBillWave />,
   },
   {
     key: "settings",

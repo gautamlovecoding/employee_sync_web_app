@@ -7,6 +7,7 @@ import { columns, EmployeeButtons } from "../../utils/EmployeeHelper";
 const List = () => {
   const [employees, setEmployees] = useState([]);
   const [empLoading, setEmpLoading] = useState(false);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
 
   const fetchEmployees = async () => {
     setEmpLoading(true);
@@ -31,8 +32,8 @@ const List = () => {
           profileImage: <img className="w-20 h-20 rounded-full object-cover shadow-md" src={`http://localhost:5000/${employee.userId.profileImage}`} />,
           action: <EmployeeButtons _id={employee._id} />,
         }));
-        console.log("Mapped Employees Data:", data);
         setEmployees(data);
+        setFilteredEmployees(data);
       }
     } catch (error) {
       if (error.response && !error.response.data.success) {
@@ -47,6 +48,13 @@ const List = () => {
     fetchEmployees();
   }, []);
 
+  const handleFilter = (e) => {
+    const filteredData = employees.filter((employee) =>
+      employee.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredEmployees(filteredData);
+  };
+
   return (
     <div className="p-5 h-screen flex flex-col">
       <div className="text-center">
@@ -55,8 +63,9 @@ const List = () => {
       <div className="flex justify-between items-center mb-4">
         <input
           type="text"
-          placeholder="Search By Company Name"
-          className="px-4 py-1 border border-gray-400 rounded-sm"
+          placeholder="Search By Name"
+          onChange={handleFilter}
+          className="px-4 py-1 border border-gray-400 rounded-md"
         />
         <Link
           to="/admin-dashboard/add-employees"
@@ -66,7 +75,7 @@ const List = () => {
         </Link>
       </div>
       <div>
-        <DataTable columns={columns} data={employees} />
+        <DataTable columns={columns} data={filteredEmployees} pagination/>
       </div>
     </div>
   );
