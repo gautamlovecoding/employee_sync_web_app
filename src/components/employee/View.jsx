@@ -18,8 +18,6 @@ const View = () => {
           }
         );
 
-        console.log("response>>>>>", response.data);
-
         if (response.data.success) {
           setEmployee(response.data.employee);
         }
