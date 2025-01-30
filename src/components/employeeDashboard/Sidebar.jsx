@@ -44,7 +44,9 @@ export default function Sidebar() {
         <div className="py-6 flex flex-1 flex-col gap-1">
           {EMPLOYEE_SIDEBAR_LINKS.map((link) => {
             if (link.path.includes("profile")) {
-              link.path = `/employee-dashboard/profile/${user._id}`;
+              link.path = `/employee-dashboard/profile/${
+                user?.id || user?._id
+              }`;
             }
             return <SidebarLink key={link.key} link={link} />;
           })}
