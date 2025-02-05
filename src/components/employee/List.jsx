@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DataTable from "react-data-table-component";
+import CustomDataTable from "../shared/CustomDataTable";
 import axios from "axios";
 import { columns, EmployeeButtons } from "../../utils/EmployeeHelper";
 
@@ -29,7 +29,12 @@ const List = () => {
           comp_name: employee.company.comp_name,
           name: employee.userId.name,
           dob: new Date(employee.dob).toLocaleDateString(),
-          profileImage: <img className="w-20 h-20 rounded-full object-cover shadow-md" src={`http://localhost:5000/${employee.userId.profileImage}`} />,
+          profileImage: (
+            <img
+              className="w-20 h-20 rounded-full object-cover shadow-md"
+              src={`http://localhost:5000/${employee.userId.profileImage}`}
+            />
+          ),
           action: <EmployeeButtons _id={employee._id} />,
         }));
         setEmployees(data);
@@ -56,28 +61,22 @@ const List = () => {
   };
 
   return (
-    <div className="p-5 h-screen flex flex-col">
-      <div className="text-center">
-        <h3 className="text-2xl font-bold">Manage Employees</h3>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search By Name"
-          onChange={handleFilter}
-          className="px-4 py-1 border border-gray-400 rounded-md"
+    <>
+      {empLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <CustomDataTable 
+          data={filteredEmployees}
+          columns={columns}
+          searchPlaceholder="Search By Name"
+          onSearch={handleFilter}
+          addNewButton={{
+            label: "Employee",
+            path: "/admin-dashboard/add-employees"
+          }}
         />
-        <Link
-          to="/admin-dashboard/add-employees"
-          className="px-4 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 hover:no-underline"
-        >
-          Add New Employee
-        </Link>
-      </div>
-      <div>
-        <DataTable columns={columns} data={filteredEmployees} pagination/>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

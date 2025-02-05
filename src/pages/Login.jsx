@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FcBusinessman } from "react-icons/fc";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +9,20 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem("rememberedEmail");
+    const rememberedPassword = localStorage.getItem("rememberedPassword");
+    if (rememberedEmail && rememberedPassword) {
+      setEmail(rememberedEmail);
+      setPassword(rememberedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +41,13 @@ export default function Login() {
           navigate("/admin-dashboard");
         } else {
           navigate("/employee-dashboard");
+        }
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
         }
       }
     } catch (error) {
@@ -61,6 +81,7 @@ export default function Login() {
               type="email"
               className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               placeholder="Enter Email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -72,19 +93,31 @@ export default function Login() {
             >
               Password*
             </label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              placeholder="********"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
           <div className="mb-4 mt-4 flex items-center justify-between">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
                 className="form-checkbox text-indigo-500 focus:ring-indigo-500"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
               />
               <span className="ml-2 text-gray-700">Remember me</span>
             </label>

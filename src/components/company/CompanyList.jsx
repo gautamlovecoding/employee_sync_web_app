@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import DataTable from "react-data-table-component";
 import { columns, CompanyButtons } from "../../utils/CompanyHelper";
 import axios from "axios";
+import CustomDataTable from "../shared/CustomDataTable";
 
 const CompanyList = () => {
-  const [company, setComapny] = useState([]);
+  const [company, setCompany] = useState([]);
   const [compLoading, setCompLoading] = useState(false);
   const [filteredCompany, setFilteredCompany] = useState([]);
 
@@ -34,7 +33,7 @@ const CompanyList = () => {
             />
           ),
         }));
-        setComapny(data);
+        setCompany(data);
         setFilteredCompany(data);
       }
     } catch (error) {
@@ -62,28 +61,16 @@ const CompanyList = () => {
       {compLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="p-5 h-screen flex flex-col">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold">Manage Companies</h3>
-          </div>
-          <div className="flex justify-between items-center mb-4">
-            <input
-              type="text"
-              placeholder="Search By Company Name"
-              className="px-4 py-1 border border-gray-400 rounded-sm"
-              onChange={filterCompany}
-            />
-            <Link
-              to="/admin-dashboard/add-companies"
-              className="px-4 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 hover:no-underline"
-            >
-              Add New Company
-            </Link>
-          </div>
-          <div className="flex-1 overflow-y-auto">
-            <DataTable columns={columns} data={filteredCompany} pagination />
-          </div>
-        </div>
+        <CustomDataTable 
+          data={filteredCompany}
+          columns={columns}
+          searchPlaceholder="Search By Company Name"
+          onSearch={filterCompany}
+          addNewButton={{
+            label: "Company",
+            path: "/admin-dashboard/add-companies"
+          }}
+        />
       )}
     </>
   );

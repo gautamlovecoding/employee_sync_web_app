@@ -10,11 +10,13 @@ export default function AdminDashboard() {
   const { user } = useAuth();
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <AdminSidebar />
-      <div className="flex-1 h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col">
         <Navbar />
-        <Outlet />
+        <main className="flex-1 overflow-hidden bg-gray-100">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
